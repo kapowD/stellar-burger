@@ -7,7 +7,7 @@ import {
   updateUserApi,
   getOrdersApi,
   TRegisterData
-} from '@api';
+} from '../../utils/burger-api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TUser, TOrder } from '@utils-types';
 import { getCookie, deleteCookie, setCookie } from '../../utils/cookie';
@@ -21,7 +21,7 @@ interface TUserState {
   error?: string | null;
 }
 
-const initialState: TUserState = {
+export const initialState: TUserState = {
   isAuth: false,
   user: null,
   orders: [],
@@ -64,18 +64,11 @@ export const userLogin = createAsyncThunk(
 );
 export const getUserProfile = createAsyncThunk(
   'user/getUserProfile',
-  async () => {
-    const response = await getUserApi();
-    return response;
-  }
+  getUserApi
 );
-
 export const updateUserProfile = createAsyncThunk(
   'user/updateUserProfile',
-  async (data: TUser) => {
-    const response = await updateUserApi(data);
-    return response;
-  }
+  updateUserApi
 );
 export const logout = createAsyncThunk('user/logout', async () => {
   await logoutApi();
